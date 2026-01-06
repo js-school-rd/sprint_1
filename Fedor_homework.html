@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script>
+    const user = {
+      name: prompt('Enter user name:') || 'Guest',
+      balance: 120,
+      isBlocked: false,
+      isLoggedIn: true,
+    }
+
+    function User(name) {
+      this.name = name;
+      this.balance = 120;
+      this.isBlocked = false;
+      this.isLoggedIn = true;
+    }
+
+    function getUserStatus(user) {
+      if (user.isBlocked === true) return "Blocked";
+      if (user.balance <= 0) return "No funds";
+      return "Active";
+    }
+
+    function canUserProceed(user) {
+      return (user.isLoggedIn && !user.isBlocked && user.balance > 0);
+    }
+
+    function buildUserViewModel(user) {
+      return {
+        name: user.name,
+        status: getUserStatus(user),
+        canProceed: canUserProceed(user),
+      }
+    }
+
+    function checkStatus(user) {
+      return canUserProceed(user) ? alert(`Welcome, ${user.name}`) : alert('Access denied');
+    }
+  </script>
+</head>
+
+<body>
+  <button id='check'>Check user</button>
+  <script>
+    let element = document.getElementById('check');
+    let newUser = new User(prompt('Enter user name:') || 'Guest');
+    element.onclick = function () {
+      checkStatus(newUser);
+    }
+  </script>
+</body>
+
+</html>
